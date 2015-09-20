@@ -1,17 +1,22 @@
-gotoxy PROC
+ui_demo PROC
+
+	ret
+ui_demo ENDP
+
+ui_gotoxy PROC
 	; Will be added	
 
 	ret
-gotoxy ENDP
+ui_gotoxy ENDP
 
-whereX PROC
+ui_whereX PROC
 	; Will be added	
 
 	ret
-whereX ENDP
+ui_whereX ENDP
 
-whereY PROC
+ui_whereY PROC
 	; Will be added	
 
 	ret
-whereY ENDP
+ui_whereY ENDP

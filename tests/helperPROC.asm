@@ -1,4 +1,4 @@
-demo PROC
+tests_demo PROC
 
 	ret
-demo ENDP
+tests_demo ENDP
