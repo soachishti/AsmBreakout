@@ -7,5 +7,5 @@ Its all M for mathematics buddy!
 ### Team Member
 * Zerk Shaban
 * Syed Owais Ali Chishti
-* will be added
-* will be added
+* Shaleem John
+* Faisal Usman
