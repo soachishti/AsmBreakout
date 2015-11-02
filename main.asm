@@ -7,7 +7,7 @@ include tests\tests.asm
 
 .code 
 main PROC
-    call tests
+   	call tests
 	call core
 	call ui
 	
