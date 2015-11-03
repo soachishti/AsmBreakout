@@ -2,6 +2,6 @@
 include helperPROC.asm
 
 core PROC
-	; Zerk code
+		call dumpregs
 	ret
 core ENDP
