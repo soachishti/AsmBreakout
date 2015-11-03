@@ -6,6 +6,7 @@ include ui.asm
 .code 
 main PROC
 	; code here	
+	call ui
 	ret
 main ENDP
 END main
