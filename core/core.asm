@@ -6,7 +6,7 @@ COORDv2 STRUCT
 COORDv2 ENDS
 
 .data
-   str1 BYTE "[======]",0
+    str1 BYTE "[======]",0
     Block1x COORDv2 <?>
 	val1 BYTE 0
 	val2 BYTE 0
@@ -51,7 +51,6 @@ core PROC
 		
 		inc val2
 		mov ecx,10
-		
 	L3:
 		mov al,val1
 		mov bl,val2
@@ -66,7 +65,5 @@ core PROC
 		call writestring
 		add val1,8
 		loop L3
-
-		call dumpregs
 	ret
 core ENDP
