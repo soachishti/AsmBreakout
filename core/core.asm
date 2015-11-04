@@ -23,8 +23,8 @@ core PROC
 		mov Block1x.Y, bl
 		
 		mov dl, Block1x.X
-		mov dh, Block1x.Y
-		call Gotoxy
+		mov dh, Block1x.Y 
+		call Gotoxy   
            
 		mov edx,OFFSET str1
 		call writestring
