@@ -1,5 +1,4 @@
-include irvine32.inc
-include MACROS.inc
+
 COORDv2 STRUCT
 	X BYTE ?
 	Y BYTE ?
