@@ -17,12 +17,6 @@ POINT ENDS
 .code 
 include helperPROC.asm
 eraseBlock PROC
-		
-		mov al,val1
-		mov ah,val2
-		
-		mov axis[esi].x,al 
-		mov axis[esi].y,ah
 		mov dl, axis[esi].x
 		mov dh, axis[esi].y
 		call Gotoxy
@@ -37,7 +31,7 @@ core PROC
 	mov eax, 0
 	mov esi, 0
 	mov ecx, 10
-	call eraseBlock
+
 	row1:
 		mov al,val1
 		mov ah,val2
@@ -102,7 +96,10 @@ core PROC
 		add val1,8
 		add color_rand,1
 	loop row3
-		
+
+            mov esi, 0
+        call eraseBlock
+    
 		call crlf
 		call crlf
 		call crlf
