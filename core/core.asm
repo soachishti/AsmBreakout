@@ -15,11 +15,24 @@ POINT ENDS
 	color_rand DWORD 2
 .code 
 include helperPROC.asm
-eraseBlock PROC
 
-ret
-eraseBlock ENDP
 core PROC
+eraseBlock PROC
+		
+		mov al,val1
+		mov ah,val2
+		
+		mov axis[esi].x,al 
+		mov axis[esi].y,ah
+		mov dl, axis[esi].x
+		mov dh, axis[esi].y
+		call Gotoxy
+		mov edx,OFFSET Space
+		call writestring
+		
+	ret
+eraseBlock ENDP
+
 	mov eax, 0
 	mov esi, 0
 	mov ecx, 10
