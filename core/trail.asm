@@ -1,6 +1,7 @@
 include Irvine32.inc 
 include core.asm
 
+SetTextColor PROTO
 .data
 
 .code 
