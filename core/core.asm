@@ -6,6 +6,7 @@ POINT ENDS
 
 .data
 	block BYTE "[======]",0
+	Space BYTE "        ",0
 	sizeA = 10
 	axis POINT sizeA DUP(<?,?>)
 	axis1 POINT sizeA DUP(<?,?>)
@@ -15,8 +16,6 @@ POINT ENDS
 	color_rand DWORD 2
 .code 
 include helperPROC.asm
-
-core PROC
 eraseBlock PROC
 		
 		mov al,val1
@@ -33,9 +32,12 @@ eraseBlock PROC
 	ret
 eraseBlock ENDP
 
+core PROC
+
 	mov eax, 0
 	mov esi, 0
 	mov ecx, 10
+	call eraseBlock
 	row1:
 		mov al,val1
 		mov ah,val2
