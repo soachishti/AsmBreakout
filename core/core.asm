@@ -15,6 +15,10 @@ POINT ENDS
 	color_rand DWORD 2
 .code 
 include helperPROC.asm
+eraseBlock PROC
+
+ret
+eraseBlock ENDP
 core PROC
 	mov eax, 0
 	mov esi, 0
