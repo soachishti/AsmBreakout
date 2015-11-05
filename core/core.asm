@@ -8,13 +8,48 @@ COORDv2 ENDS
     str1 BYTE "[======]",0
     Block1x COORDv2 <?>
 	val1 BYTE 0
-	val2 BYTE 0
+	val2 BYTE 3
 	color_rand DWORD 2
+	Lives BYTE "Lives:3",0
+	Score BYTE "Score:0000",0
 .code 
 include helperPROC.asm
-
-core PROC
+z_LivesNscore PROC
 		
+		mov al,15
+		mov bl,0
+		mov Block1x.X, al
+		mov Block1x.Y, bl
+		
+		mov dl, Block1x.X
+		mov dh, Block1x.Y 
+		call Gotoxy   
+
+    	mov  eax,3 
+		call SetTextColor
+
+		mov edx,OFFSET Lives
+		call writestring
+		
+		mov al,55
+		mov bl,0
+		mov Block1x.X, al
+		mov Block1x.Y, bl
+		
+		mov dl, Block1x.X
+		mov dh, Block1x.Y 
+		call Gotoxy   
+
+    	mov  eax,3 
+		call SetTextColor
+
+		mov edx,OFFSET Score
+		call writestring
+		
+	ret
+z_LivesNscore ENDP
+core PROC
+		call z_LivesNscore	
 		mov ecx,10
 	L1:
 		
