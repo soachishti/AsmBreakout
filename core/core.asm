@@ -14,12 +14,10 @@ POINT ENDS
 	color_rand DWORD 2
 .code 
 include helperPROC.asm
-<<<<<<< HEAD
 Print_Grid PROC
 		mov eax, 0
 		mov esi, 0
-		mov ecx, 30
-=======
+		mov ecx, 3
 eraseBlock PROC
 		mov dl, axis[esi].x
 		mov dh, axis[esi].y
@@ -36,7 +34,6 @@ core PROC
 	mov esi, 0
 	mov ecx, 10
 
->>>>>>> 3f8c5c3d8c152ad7977fa6b23e0684b7fe1412ef
 	row1:
 		mov al,val1
 		mov ah,val2
@@ -84,7 +81,7 @@ eraseBlock PROC
 	
 		mov edx,OFFSET Space
 		call writestring
-<<<<<<< HEAD
+
 		
 	ret
 eraseBlock ENDP
@@ -92,7 +89,7 @@ eraseBlock ENDP
 core PROC
 
 call Print_Grid				
-=======
+
 		add val1,8
 		add color_rand,1
 	loop row3
@@ -100,18 +97,6 @@ call Print_Grid
             mov esi, 0
         call eraseBlock
     
->>>>>>> 3f8c5c3d8c152ad7977fa6b23e0684b7fe1412ef
-		call crlf
-		call crlf
-		call crlf
-		call crlf
-		call crlf
-		call crlf
-		call crlf
-		call crlf
-		call crlf
-		call crlf
-		call crlf
 
 
 	ret
