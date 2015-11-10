@@ -20,7 +20,7 @@ POINT ENDS
 
 	block BYTE "[======]",0
 	Space BYTE "        ",0
-	sizeA = 10
+	sizeA = 10 + 10 + 10
 	axis POINT sizeA DUP(<?,?>)
 	val1 BYTE 0
 	val2 BYTE 0
@@ -48,7 +48,7 @@ eraseBlock ENDP
 Print_Grid PROC
 		mov eax, 0
 		mov esi, 0
-		mov ecx, 30
+		mov ecx, sizeA
 	row1:
 		mov al,val1
 		mov ah,val2
@@ -66,11 +66,11 @@ Print_Grid PROC
 		mov edx,OFFSET block
 		call writestring
 		
-	.if color_rand>=15
+	.if color_rand >= 15
 		mov color_rand,3
 	.endif
 		
-	.if val2>=80
+	.if val2 >= 80
 		mov val2,0
 		add val1,1
 	.endif
@@ -121,8 +121,13 @@ StickMovement ENDP
 
 core PROC
 
+<<<<<<< HEAD
 call stickMovement
 call Print_Grid				
+=======
+    call Print_Grid				
+    
+>>>>>>> 8c2cf3815faeccd276b7b07eb6bbc722d5da8ca3
 
 	ret
 core ENDP
