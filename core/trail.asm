@@ -3,7 +3,7 @@ INCLUDELIB user32.lib
 INCLUDE Macros.inc 
 include core.asm
 
-
+SetTextColor PROTO
 .data
 
 .code 

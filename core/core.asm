@@ -1,11 +1,9 @@
-
 VK_LEFT		EQU		000000025h
 VK_RIGHT	EQU		000000027h
-maxCol      EQU     73
-maxRow      EQU     39
+maxCol      EQU     79
+maxRow      EQU     25
 
 GetKeyState PROTO, nVirtKey:DWORD
-
 
 POINT STRUCT
 	x BYTE ?
@@ -13,24 +11,24 @@ POINT STRUCT
 POINT ENDS
 
 .data
-	col BYTE 0
-    row BYTE 24
-	stick BYTE "<####>",0
-	Invisible_stick BYTE "      ",0
-
-	block BYTE "[======]",0
-	Space BYTE "        ",0
-	sizeA = 10
-	axis POINT sizeA DUP(<?,?>)
-	val1 BYTE 0
-	val2 BYTE 0
-	color_rand DWORD 2
+	stickCol        BYTE    0
+    stickRow        BYTE    25 ; 25 is standard
+    stickSize       =       10
+	stick           BYTE    "<########>",0
+	Invisible_stick BYTE    "          ",0
+    maxBlock        =       30
+    gameSpeed       =       25
+	block           BYTE    "[======]",0
+	Space           BYTE    "        ",0
+	sizeA           =       10
+	axis            POINT   sizeA DUP(<?,?>)
+	val1            BYTE    0
+	val2            BYTE    0
+	color_rand      DWORD   2
 .code 
 include helperPROC.asm
 
-
 eraseBlock PROC
-		
 		mov al,val1
 		mov ah,val2
 		
@@ -48,7 +46,7 @@ eraseBlock ENDP
 Print_Grid PROC
 		mov eax, 0
 		mov esi, 0
-		mov ecx, 30
+		mov ecx, maxBlock
 	row1:
 		mov al,val1
 		mov ah,val2
@@ -66,68 +64,60 @@ Print_Grid PROC
 		mov edx,OFFSET block
 		call writestring
 		
-	.if color_rand>=15
-		mov color_rand,3
+	.if color_rand >= 15
+		mov color_rand, 3
 	.endif
 		
-	.if val2>=80
-		mov val2,0
-		add val1,1
+	.if val2 >= 80
+		mov val2, 0
+		add val1, 1
 	.endif
-	
 		add val2,8	
-		add color_rand,1
-		
+		add color_rand,1	
 	loop row1	
 
 ret
 Print_Grid ENDP
 
 StickMovement PROC
-	call Print_Grid
-	looop:   	
-	INVOKE GetKeyState, VK_LEFT
-    .IF ah && col > 0 
-        ;mWriteLn "LEFT"
-        DEC col
-	.ENDIF  
+        INVOKE GetKeyState, VK_LEFT
+        .IF ah && stickCol > 0 
+            DEC stickCol
+        .ENDIF  
 
-	INVOKE GetKeyState, VK_RIGHT
-    .IF ah && col < maxCol
-        ;mWriteLn "RIGHT"
-        INC col
-	.ENDIF     
+        INVOKE GetKeyState, VK_RIGHT
+        .IF ah && stickCol <= maxCol - stickSize
+            INC stickCol
+        .ENDIF     
 
-    mov  dl, col        
-    mov  dh, row        
-    call Gotoxy         
+        mov  dl, stickCol        
+        mov  dh, stickRow        
+        call Gotoxy         
 
-    mov eax,3    
-	call SetTextColor
-   
-   mov  edx,OFFSET stick          
-    call Writestring    
- 
-    invoke Sleep, 25
-    
-    
-    mov  dl, col        
-	mov  dh, row        
-    call Gotoxy         
-    
-    mov  edx,OFFSET Invisible_stick     
-    call Writestring     
-    
-	add color_rand,1
-    jmp looop
+        mov eax,3    
+        call SetTextColor
+       
+        mov  edx, OFFSET stick          
+        call Writestring    
+        
+        invoke Sleep, gameSpeed
+        
+        mov  dl, stickCol        
+        mov  dh, stickRow        
+        call Gotoxy         
+        
+        mov  edx,OFFSET Invisible_stick     
+        call Writestring     
+        
+        add color_rand,1
 	ret
 StickMovement ENDP
 
-
 core PROC
-
-call stickMovement
-;call Print_Grid				
-
+    call Print_Grid
+  	foreverLoop: 	
+        call stickMovement		
+        jmp foreverLoop
+    
 	ret
 core ENDP
