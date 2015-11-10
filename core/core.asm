@@ -1,10 +1,23 @@
 
+VK_LEFT		EQU		000000025h
+VK_RIGHT	EQU		000000027h
+maxCol      EQU     73
+maxRow      EQU     39
+
+GetKeyState PROTO, nVirtKey:DWORD
+
+
 POINT STRUCT
 	x BYTE ?
 	y BYTE ?
 POINT ENDS
 
 .data
+	col BYTE 0
+    row BYTE 39
+	stick BYTE "<####>",0
+	Invisible_stick BYTE "      ",0
+
 	block BYTE "[======]",0
 	Space BYTE "        ",0
 	sizeA = 10
@@ -14,6 +27,8 @@ POINT ENDS
 	color_rand DWORD 2
 .code 
 include helperPROC.asm
+
+
 eraseBlock PROC
 		
 		mov al,val1
@@ -68,11 +83,46 @@ Print_Grid PROC
 ret
 Print_Grid ENDP
 
+StickMovement PROC
+	looop:   	
+	INVOKE GetKeyState, VK_LEFT
+    .IF ah && col > 0 
+        ;mWriteLn "LEFT"
+        DEC col
+	.ENDIF  
+
+	INVOKE GetKeyState, VK_RIGHT
+    .IF ah && col < maxCol
+        ;mWriteLn "RIGHT"
+        INC col
+	.ENDIF     
+
+    mov  dl, col        
+    mov  dh, row        
+    call Gotoxy         
+        
+    mov  edx,OFFSET stick          
+    call Writestring    
+ 
+    invoke Sleep, 25
+    
+    
+    mov  dl, col        
+	mov  dh, row        
+    call Gotoxy         
+    
+    mov  edx,OFFSET Invisible_stick     
+    call Writestring     
+    
+    jmp looop
+	ret
+StickMovement ENDP
+
 
 core PROC
 
+call stickMovement
 call Print_Grid				
-    
 
 	ret
 core ENDP
