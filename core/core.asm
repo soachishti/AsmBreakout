@@ -28,7 +28,7 @@ POINT ENDS
 .code 
 include helperPROC.asm
 
-eraseBlock PROC
+z_eraseBlock PROC
 		mov al,val1
 		mov ah,val2
 		
@@ -41,9 +41,9 @@ eraseBlock PROC
 		call writestring
 		
 	ret
-eraseBlock ENDP
+z_eraseBlock ENDP
 
-Print_Grid PROC
+z_Print_Grid PROC
 		mov eax, 0
 		mov esi, 0
 		mov ecx, maxBlock
@@ -77,9 +77,9 @@ Print_Grid PROC
 	loop row1	
 
 ret
-Print_Grid ENDP
+z_Print_Grid ENDP
 
-StickMovement PROC
+z_StickMovement PROC
         INVOKE GetKeyState, VK_LEFT
         .IF ah && stickCol > 0 
             DEC stickCol
@@ -111,12 +111,12 @@ StickMovement PROC
         
         add color_rand,1
 	ret
-StickMovement ENDP
+z_StickMovement ENDP
 
 core PROC
-    call Print_Grid
+    call z_Print_Grid
   	foreverLoop: 	
-        call stickMovement		
+        call z_stickMovement		
         jmp foreverLoop
     
 	ret
