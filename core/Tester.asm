@@ -7,7 +7,7 @@ VK_UP		EQU		000000026h
 VK_RIGHT	EQU		000000027h
 VK_DOWN		EQU		000000028h
 maxX      EQU     79
-maxY      EQU     30
+maxY      EQU     20
 
 GetKeyState PROTO, nVirtKey:DWORD
 
