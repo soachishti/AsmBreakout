@@ -36,17 +36,41 @@ POINT ENDS
 .code 
 include helperPROC.asm
 
+<<<<<<< HEAD
 eraseBlock PROC
+=======
+z_eraseBlock PROC
+		mov al,val1
+		mov ah,val2
+		
+		mov axis[esi].x,al 
+		mov axis[esi].y,ah
+>>>>>>> 9e28c66d9863b78872e20f68b9f59dccf8ae0a32
 		mov dl, axis[esi].x
 		mov dh, axis[esi].y
 		call Gotoxy
 		mov edx,OFFSET Space
 		call writestring
 	ret
-eraseBlock ENDP
+z_eraseBlock ENDP
 
+<<<<<<< HEAD
 printBlock PROC
     	mov dl, axis[esi].x
+=======
+z_Print_Grid PROC
+		mov eax, 0
+		mov esi, 0
+		mov ecx, maxBlock
+	row1:
+		mov al,val1
+		mov ah,val2
+		
+		mov axis[esi].x,ah 
+		mov axis[esi].y,al
+	
+		mov dl, axis[esi].x
+>>>>>>> 9e28c66d9863b78872e20f68b9f59dccf8ae0a32
 		mov dh, axis[esi].y
 		call Gotoxy
 		
@@ -99,9 +123,15 @@ Init_Grid PROC
 	loop row1	
 
 ret
+<<<<<<< HEAD
 Init_Grid ENDP
 
 StickMovement PROC    
+=======
+z_Print_Grid ENDP
+
+z_StickMovement PROC
+>>>>>>> 9e28c66d9863b78872e20f68b9f59dccf8ae0a32
         INVOKE GetKeyState, VK_LEFT
         .IF ah && stickPos.x > 0
             mov al, stickSpeed
@@ -140,6 +170,7 @@ EraseStick PROC
         mov  edx, OFFSET Invisible_stick     
         call Writestring     
         
+<<<<<<< HEAD
         add color_rand,1  
     ret
 EraseStick ENDP
@@ -267,6 +298,16 @@ core PROC
         call EraseStick
         
     resume:
+=======
+        add color_rand,1
+	ret
+z_StickMovement ENDP
+
+core PROC
+    call z_Print_Grid
+  	foreverLoop: 	
+        call z_stickMovement		
+>>>>>>> 9e28c66d9863b78872e20f68b9f59dccf8ae0a32
         jmp foreverLoop
     
     
