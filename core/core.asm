@@ -58,8 +58,6 @@ printBlock PROC
     ret
 printBlock ENDP
 
-
-
 Init_Grid PROC
         LOCAL val1:BYTE, val2:BYTE
                
@@ -84,8 +82,7 @@ Init_Grid PROC
 	.if color_rand >= 15
 		mov color_rand, 3
 	.endif
-		
-        
+
         add val2,8	
 		add color_rand,1
 	
@@ -227,6 +224,9 @@ grid_collision_check PROC
             call eraseBlock
             inc score
             
+            pushfd
+            INVOKE  Beep, 300,50;
+            popfd
             neg ballDir.x
             neg ballDir.y
             mov axis[esi].x, -1
@@ -244,6 +244,7 @@ core PROC
   	foreverLoop: 
         INVOKE GetKeyState, VK_ESCAPE
         .IF ah
+            INVOKE  Beep, 1000,500;
             jmp gamePause
         .ENDIF
 	
