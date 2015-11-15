@@ -29,11 +29,16 @@ POINT ENDS
 	axis            POINT   maxBlock DUP(<?,?>)
 	color_rand      DWORD   2
     
-    ballChar        BYTE    'o'
+    ballChar        BYTE    'O'
     ball            POINT   <40,25>
     ballDir         POINT   <1,1>
     stickSpeed      =       3
     score           DWORD   0
+    
+    playerName      BYTE    "Owais",0
+    
+    life            BYTE    4
+    lifeCh          BYTE    3    
 .code 
 include helperPROC.asm
 
@@ -165,15 +170,15 @@ EraseStick PROC
 EraseStick ENDP
 
 BallMovement PROC
-    .IF ball.x >= maxCol   ; Right Wall
+    .IF ball.x >= (maxCol - 1)   ; Right Wall
         mov ballDir.x, -1
   	.ENDIF
 
-    .IF ball.x <= 0        ; Left Wall
+    .IF ball.x <= 1        ; Left Wall
         mov ballDir.x, 1
 	.ENDIF     
 
-    .IF ball.y <= 0        ; Top
+    .IF ball.y <= 2        ; Top
         mov ballDir.y, 1
 	.ENDIF  
 
@@ -250,7 +255,7 @@ grid_collision_check PROC
             pushfd
             INVOKE  Beep, 300,50;
             popfd
-            neg ballDir.x
+            ;neg ballDir.x
             neg ballDir.y
             mov axis[esi].x, -1
             mov axis[esi].y, -1
@@ -262,9 +267,83 @@ grid_collision_check PROC
     ret
 grid_collision_check ENDP
 
+printBorder PROC
+    mov ecx, maxCol
+    l0:
+        mGotoxy cl, 1
+        mWrite "#"
+        mGotoxy cl, maxRow+1
+        mWrite "#"
+        dec ecx
+        cmp ecx, 0
+        jge l0
+        
+    mov ecx, maxRow    
+    l1:
+        mGotoxy 0, cl
+        mWrite "#"
+        mGotoxy maxCol, cl 
+        mWrite "#"
+        dec ecx
+        cmp ecx, 1
+        jg l1   
+        
+    ret
+printBorder ENDP
+
+printTitle PROC
+    mGotoxy 0, 0
+    mov  eax,white+(black*16)
+    call SetTextColor
+    mWrite "Name: "
+    
+    mov  eax,green+(black*16)
+    call SetTextColor
+    mov edx, OFFSET playerName
+    call WriteString  
+
+    
+    mGotoxy 35, 0
+    mov  eax,black+(white*16)
+    call SetTextColor
+    mWrite "AsmBreakout v1.0"
+
+    mov  eax,white+(black*16)
+    call SetTextColor
+    mGotoxy 69, 0
+    mWrite "Score: 1"
+    
+    mGotoxy 0, maxRow + 2
+    mWrite "Live: "
+    
+    
+    mov  eax,red+(black*16)
+    call SetTextColor
+    movzx ecx, life
+    l0:
+        mov al, lifeCh
+        call WriteChar
+    loop l0
+    ret
+printTitle ENDP
+
+updateScore PROC
+    mov  eax,green+(black*16)
+    call SetTextColor
+    mGotoxy 76, 0
+    mWrite "    " ;clean
+    mGotoxy 76, 0
+    mov eax, score
+    call WriteDec
+    ret
+updateScore ENDP
+
 core PROC
 	call UBorder
     call Init_Grid
+    call printBorder
+    call printTitle
+    
   	foreverLoop: 
         INVOKE GetKeyState, VK_ESCAPE
         .IF ah
@@ -272,9 +351,10 @@ core PROC
             jmp gamePause
         .ENDIF
 	
-        call Print_Block
-        call stickMovement	
         call BallMovement
+        ;call Print_Block
+        call stickMovement	
+        
         
         call grid_collision_check
         
@@ -290,6 +370,7 @@ core PROC
 
         call EraseBall
         call EraseStick
+        call updateScore
         
     resume:
         jmp foreverLoop
