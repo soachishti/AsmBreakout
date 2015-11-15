@@ -29,13 +29,16 @@ POINT ENDS
 	axis            POINT   maxBlock DUP(<?,?>)
 	color_rand      DWORD   2
     
-    ballChar        BYTE    'o'
+    ballChar        BYTE    'O'
     ball            POINT   <40,25>
     ballDir         POINT   <1,1>
     stickSpeed      =       3
     score           DWORD   0
     
     playerName      BYTE    "Owais",0
+    
+    life            BYTE    4
+    lifeCh          BYTE    3    
 .code 
 include helperPROC.asm
 
@@ -290,19 +293,43 @@ printBorder ENDP
 
 printTitle PROC
     mGotoxy 0, 0
+    mov  eax,white+(black*16)
+    call SetTextColor
     mWrite "Name: "
+    
+    mov  eax,green+(black*16)
+    call SetTextColor
     mov edx, OFFSET playerName
     call WriteString  
 
+    
     mGotoxy 35, 0
+    mov  eax,black+(white*16)
+    call SetTextColor
     mWrite "AsmBreakout v1.0"
 
+    mov  eax,white+(black*16)
+    call SetTextColor
     mGotoxy 69, 0
     mWrite "Score: 1"
+    
+    mGotoxy 0, maxRow + 2
+    mWrite "Live: "
+    
+    
+    mov  eax,red+(black*16)
+    call SetTextColor
+    movzx ecx, life
+    l0:
+        mov al, lifeCh
+        call WriteChar
+    loop l0
     ret
 printTitle ENDP
 
 updateScore PROC
+    mov  eax,green+(black*16)
+    call SetTextColor
     mGotoxy 76, 0
     mWrite "    " ;clean
     mGotoxy 76, 0
