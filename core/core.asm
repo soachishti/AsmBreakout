@@ -15,8 +15,8 @@ POINT ENDS
 
 .data
     stickPos        POINT   <38, 25>           
-    UpperBorder     BYTE	247,247,247,247,247,247,247,247,0
-	LowerBorder     BYTE 	247,247,247,247,247,247,247,247,0
+    ;UpperBorder     BYTE	247,247,247,247,247,247,247,247,0
+	;LowerBorder     BYTE 	247,247,247,247,247,247,247,247,0
     stickSize       =       10
 	stick           BYTE    219,219,219,219,219,219,219,219,0
 	Invisible_stick BYTE    "          ",0
@@ -63,6 +63,7 @@ printBlock PROC
 		call writestring
     ret
 printBlock ENDP
+
 UBorder PROC
 		LOCAL val1:BYTE,val2:BYTE
 		
@@ -86,6 +87,7 @@ UBorder PROC
 		
 	ret
 UBorder ENDP
+
 Init_Grid PROC
         LOCAL val1:BYTE, val2:BYTE
                
@@ -339,7 +341,7 @@ updateScore PROC
 updateScore ENDP
 
 core PROC
-	call UBorder
+	;call UBorder
     call Init_Grid
     call printBorder
     call printTitle
