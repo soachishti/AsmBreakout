@@ -35,7 +35,7 @@ POINT ENDS
     stickSpeed      =       3
     score           DWORD   0
     
-    playerName      BYTE    "Owais",0
+    playerName      BYTE    "Zerk",0
     
     life            BYTE    4
     lifeCh          BYTE    3    
@@ -270,22 +270,24 @@ grid_collision_check PROC
 grid_collision_check ENDP
 
 printBorder PROC
+	; for top and bottom
     mov ecx, maxCol
     l0:
         mGotoxy cl, 1
-        mWrite "#"
+        mWrite 1,0
         mGotoxy cl, maxRow+1
-        mWrite "#"
+        mWrite 1,0
         dec ecx
         cmp ecx, 0
         jge l0
-        
+			
+	; for right and left
     mov ecx, maxRow    
     l1:
         mGotoxy 0, cl
-        mWrite "#"
+        mWrite 2,0 ; try different char
         mGotoxy maxCol, cl 
-        mWrite "#"
+        mWrite 2,0
         dec ecx
         cmp ecx, 1
         jg l1   
@@ -323,7 +325,7 @@ printTitle PROC
     call SetTextColor
     movzx ecx, life
     l0:
-        mov al, lifeCh
+        mov al, lifeCh ; Heart
         call WriteChar
     loop l0
     ret
@@ -354,7 +356,7 @@ core PROC
         .ENDIF
 	
         call BallMovement
-        ;call Print_Block
+        ;call Print_Block ; Stick ki flickering khatam karne ke liay           
         call stickMovement	
         
         
