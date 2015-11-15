@@ -263,7 +263,7 @@ grid_collision_check PROC
 grid_collision_check ENDP
 
 core PROC
-	;call UBorder
+	call UBorder
     call Init_Grid
   	foreverLoop: 
         INVOKE GetKeyState, VK_ESCAPE
