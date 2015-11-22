@@ -14,6 +14,8 @@ bars BYTE 240,0
 bars_num BYTE 0
 	
 num DWORD 1
+
+; Controlling delay speed
 speed DWORD 80
 
 ;colors 3,6,9,12,13,14
