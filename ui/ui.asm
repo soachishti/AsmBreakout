@@ -8,17 +8,13 @@ g_name BYTE "BREAKOUT",0ah,0dh,0ah,0dh,0
 ; s_frontboundries data
 bars BYTE 178,0
 inc_bars BYTE 0
+
+include mainmenu.asm
+include about.asm
+include pausescreen.asm
 	
 .code 
 include helperPROC.asm
-
-ui PROC
-
-	call s_frontboundries
-	
-	ret
-ui ENDP
-
 s_frontscreen PROC
 
 		mov eax, 500
@@ -63,7 +59,7 @@ s_frontboundries PROC
 		
 		mov eax, GREEN
 		call SetTextColor
-		mov ecx,90
+		mov ecx,80
 		
 	Line1:
 		mov dl,inc_bars
@@ -77,12 +73,12 @@ s_frontboundries PROC
 		inc inc_bars
 			
 	loop Line1
-		
+
 		mov ecx, 17
 		mov inc_bars,1
 		
 	Line2:	
-		mov dl,89
+		mov dl,79
 		mov dh,inc_bars
 		call GoToXY
 		mov edx, OFFSET bars
@@ -93,9 +89,8 @@ s_frontboundries PROC
 		inc inc_bars
 			
 	loop Line2
-		
-		mov ecx, 90
-		mov inc_bars,89
+		mov ecx, 80
+		mov inc_bars,79
 		
 	Line3:	
 		mov dl,inc_bars

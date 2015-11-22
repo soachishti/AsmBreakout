@@ -40,8 +40,6 @@ POINT ENDS
     life            BYTE    4
     lifeCh          BYTE    3    
 .code 
-include helperPROC.asm
-
 eraseBlock PROC
 		mov dl, axis[esi].x
 		mov dh, axis[esi].y
@@ -274,9 +272,9 @@ printBorder PROC
     mov ecx, maxCol
     l0:
         mGotoxy cl, 1
-        mWrite 1,0
+        mWrite 1
         mGotoxy cl, maxRow+1
-        mWrite 1,0
+        mWrite 1
         dec ecx
         cmp ecx, 0
         jge l0
@@ -285,9 +283,9 @@ printBorder PROC
     mov ecx, maxRow    
     l1:
         mGotoxy 0, cl
-        mWrite 2,0 ; try different char
+        mWrite 2 ; try different char
         mGotoxy maxCol, cl 
-        mWrite 2,0
+        mWrite 2
         dec ecx
         cmp ecx, 1
         jg l1   
@@ -295,7 +293,7 @@ printBorder PROC
     ret
 printBorder ENDP
 
-printTitle PROC
+printTitle1 PROC
     mGotoxy 0, 0
     mov  eax,white+(black*16)
     call SetTextColor
@@ -319,8 +317,7 @@ printTitle PROC
     
     mGotoxy 0, maxRow + 2
     mWrite "Live: "
-    
-    
+       
     mov  eax,red+(black*16)
     call SetTextColor
     movzx ecx, life
@@ -329,7 +326,7 @@ printTitle PROC
         call WriteChar
     loop l0
     ret
-printTitle ENDP
+printTitle1 ENDP
 
 updateScore PROC
     mov  eax,green+(black*16)
@@ -346,7 +343,7 @@ core PROC
 	;call UBorder
     call Init_Grid
     call printBorder
-    call printTitle
+    call printTitle1
     
   	foreverLoop: 
         INVOKE GetKeyState, VK_ESCAPE
@@ -389,6 +386,10 @@ core PROC
     finish:
         ; Will add life
         mWrite "Game End"
+        
+        dec life
+        call updateLife
+        
         jmp return
     gamePause:
         mWrite "Game Paused"
@@ -397,3 +398,20 @@ core PROC
     return:
 	ret
 core ENDP
+
+updateLife PROC
+    mGotoxy 0, maxRow + 2
+    mWrite "               "
+    
+    mGotoxy 0, maxRow + 2
+    mWrite "Live: "
+
+    mov  eax,red+(black*16)
+    call SetTextColor
+    movzx ecx, life
+    l0:
+        mov al, lifeCh ; Heart
+        call WriteChar
+    loop l0
+    ret
+updateLife ENDP

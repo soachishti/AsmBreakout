@@ -1,13 +1,13 @@
 include Irvine32.inc
-include ui.asm
-
+include mainmenu.asm
+SetTextColor PROTO
 .data
 	; data here
 .code 
 
 main PROC
 	
-	call ui
-	
+
+	exit
 main ENDP
 END main

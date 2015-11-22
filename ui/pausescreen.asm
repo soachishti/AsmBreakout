@@ -1,31 +1,24 @@
-Include irvine32.inc
-Include boundries.asm
 ; Pause menu
 ; Resume Game
 ; Restart Game
 ; Exit to main menu
 ; Exit to quit
-
 .data
 pausegame BYTE "GAME PAUSED",0ah,0dh,0
-resumegame BYTE "     Resume",0ah,0dh,0
-restartgame BYTE "  Restart Game",0ah,0dh,0
-exitmain BYTE "Exit to Main Menu",0ah,0dh,0
-exitgame BYTE "    Exit Game",0ah,0dh,0
+resumegame BYTE "     (R)esume",0ah,0dh,0
+restartgame BYTE "  Restart (G)ame",0ah,0dh,0
+exitmain BYTE "Exit to (M)ain Menu",0ah,0dh,0
+exitgame1 BYTE "    (E)xit Game",0ah,0dh,0
 
-dh_num BYTE 9
+dh_num1 BYTE 7
 
 .code
-main PROC
-		call s_pausetextborder
-		call s_pause
-
-exit
-main ENDP
 
 s_pause PROC
-
-		mov edx, OFFSET exitgame
+        call s_nodelay_boundries
+        call s_pausetextborder
+        
+		mov edx, OFFSET exitgame1
 		push edx
 		mov edx, OFFSET exitmain
 		push edx
@@ -38,35 +31,33 @@ s_pause PROC
 		
 		mov eax, WHITE
 		call SetTextColor
-		mov dl,39
-		mov dh,8
+		mov dl,34
+		mov dh,6
 		call GoToXY
 			
 		pop edx
 		call WriteString
 				
-		inc dh_num
+		inc dh_num1
 		mov ecx,4
 		
 		mov eax, YELLOW
 		call SetTextColor
 		
 	text:
-		mov dl,37
-		mov dh,dh_num
+		mov dl,31
+		mov dh,dh_num1
 		call GoToXY
 		
 		pop edx
 		call WriteString
 		
-		inc dh_num
+		inc dh_num1
 		
 	loop text
 		
-		mov dl,30
-		mov dh,dh_num
+		mov dl,15
+		mov dh,dh_num1
 		call GoToXY
 ret
 s_pause ENDP
-END main
-

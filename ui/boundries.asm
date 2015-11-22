@@ -4,7 +4,7 @@
 bars_bound BYTE 178,0
 
 bars_top BYTE 0
-bars_bottom BYTE 89
+bars_bottom BYTE 79
 bars_right BYTE 1
 bars_left BYTE 19
 
@@ -12,74 +12,17 @@ speed_bars_hor DWORD 10
 speed_bars_ver DWORD 20
 
 ; s_menutextborders data
-inc_bars BYTE ?
+inc_bars2 BYTE ?
 bars_star BYTE "*",0
 
 
 .code
 
-s_frontboundries PROC
-		
-		mov eax, GREEN
-		call SetTextColor
-		mov ecx,90
-		
-	Lines_hor:
-		mov dl,bars_top
-		mov dh,0
-		call GoToXY
-		mov edx, OFFSET bars_bound
-		mov eax, speed_bars_hor
-		call Delay
-		call WriteString
-			
-		inc bars_top
-		
-		mov dl,bars_bottom
-		mov dh,19
-		call GoToXY
-		mov edx, OFFSET bars_bound
-		mov eax, speed_bars_hor
-		call Delay
-		call WriteString
-							
-		dec bars_bottom
-			
-	loop Lines_hor
-		
-		mov ecx, 19
-		
-	Lines_ver:	
-		mov dl,89
-		mov dh,bars_right
-		call GoToXY
-		mov edx, OFFSET bars_bound
-		mov eax, speed_bars_ver
-		call Delay
-		call WriteString
-					
-		inc bars_right
-		
-		mov dl,0
-		mov dh,bars_left
-		call GoToXY
-		mov edx, OFFSET bars_bound
-		mov eax, speed_bars_ver
-		call Delay
-		call WriteString
-							
-		dec bars_left
-		
-	loop Lines_ver
-	
-ret
-s_frontboundries ENDP
-
 s_nodelay_boundries PROC
 		
 		mov eax, GREEN
 		call SetTextColor
-		mov ecx,90
+		mov ecx,80
 		
 	Lines_hor:
 		mov dl,bars_top
@@ -103,7 +46,7 @@ s_nodelay_boundries PROC
 		mov ecx, 19
 		
 	Lines_ver:	
-		mov dl,89
+		mov dl,79
 		mov dh,bars_right
 		call GoToXY
 		mov edx, OFFSET bars_bound
@@ -132,11 +75,11 @@ s_menutextborder PROC
 		;mov eax, 600
 		;call delay
 		
-		mov ecx,82
-		mov inc_bars,4
+		mov ecx,72
+		mov inc_bars2,4
 				
 	Line1:
-		mov dl,inc_bars
+		mov dl,inc_bars2
 		mov dh,2
 		call GoToXY	
 		mov edx, OFFSET bars_star
@@ -144,31 +87,31 @@ s_menutextborder PROC
 		;call Delay
 		call WriteString
 			
-		inc inc_bars
+		inc inc_bars2
 			
 	loop Line1
 				
 		mov ecx, 3
-		mov inc_bars,2
+		mov inc_bars2,2
 				
 	Line2:	
-		mov dl,86	
-		mov dh,inc_bars
+		mov dl,76	
+		mov dh,inc_bars2
 		call GoToXY
 		mov edx, OFFSET bars_star
 		;mov eax, 70
 		;call Delay
 		call WriteString
 					
-		inc inc_bars
+		inc inc_bars2
 					
 	loop Line2
 				
-		mov ecx, 82
-		mov inc_bars,86
+		mov ecx, 72
+		mov inc_bars2,76
 		
 	Line3:	
-		mov dl,inc_bars
+		mov dl,inc_bars2
 		mov dh,5
 		call GoToXY
 		mov edx, OFFSET bars_star
@@ -176,24 +119,24 @@ s_menutextborder PROC
 		;call Delay
 		call WriteString
 							
-		dec inc_bars
+		dec inc_bars2
 								
 	loop Line3
 			
 			
 		mov ecx, 3
-		mov inc_bars,5
+		mov inc_bars2,5
 				
 	Line4:	
 		mov dl,4
-		mov dh,inc_bars
+		mov dh,inc_bars2
 		call GoToXY
 		mov edx, OFFSET bars_star
 		;mov eax, 70
 		;call Delay
 		call WriteString
 							
-		dec inc_bars
+		dec inc_bars2
 				
 	loop Line4
 	
@@ -207,11 +150,11 @@ s_pausetextborder PROC
 		
 		mov ecx,40
 		
-		mov bars_top, 25
-		mov bars_bottom, 64
+		mov bars_top, 20
+		mov bars_bottom, 59
 	Lines_hor:
 		mov dl,bars_top
-		mov dh,6
+		mov dh,4
 		call GoToXY
 		mov edx, OFFSET bars_bound
 		mov eax, speed_bars_hor
@@ -221,7 +164,7 @@ s_pausetextborder PROC
 		inc bars_top
 		
 		mov dl,bars_bottom
-		mov dh,16
+		mov dh,14
 		call GoToXY
 		mov edx, OFFSET bars_bound
 		mov eax, speed_bars_hor
@@ -233,11 +176,11 @@ s_pausetextborder PROC
 	loop Lines_hor
 		
 		mov ecx,10
-		mov bars_right,6
-		mov bars_left,15
+		mov bars_right,4
+		mov bars_left,14
 		
 	Lines_ver:	
-		mov dl,64
+		mov dl,59
 		mov dh,bars_right
 		call GoToXY
 		mov edx, OFFSET bars_bound
@@ -247,7 +190,7 @@ s_pausetextborder PROC
 					
 		inc bars_right
 		
-		mov dl,25
+		mov dl,20
 		mov dh,bars_left
 		call GoToXY
 		mov edx, OFFSET bars_bound

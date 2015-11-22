@@ -1,4 +1,3 @@
-Include irvine32.inc
 Include boundries.asm
 ; Main Menu screen
 ; Start Game
@@ -6,6 +5,7 @@ Include boundries.asm
 ; Credits
 ; Exit
 
+SetTextColor PROTO
 .data
 breakout BYTE "BREAKOUT",0ah,0dh,0
 menu BYTE "GAME MAIN MENU",0ah,0dh,0
@@ -23,17 +23,17 @@ dl_numleft BYTE 59
 speed DWORD 300
 dh_num BYTE 6
 
-
 .code
-main PROC
-		call s_nodelay_boundries
-		mov eax,300
-		call Delay
-		call s_menutextborder
-		call s_mainmenu
-		
-exit
-main ENDP
+
+s_menu PROC
+	call s_nodelay_boundries
+	mov eax,300
+	call Delay
+	call s_menutextborder
+	call s_mainmenu
+
+    ret
+s_menu ENDP
 
 s_mainmenu PROC
 
@@ -118,5 +118,3 @@ s_mainmenu PROC
 
 ret
 s_mainmenu ENDP
-
-END main

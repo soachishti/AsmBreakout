@@ -1,5 +1,3 @@
-include irvine32.inc
-
 ; About PAGE
 .data
 
@@ -33,22 +31,13 @@ printSubmit BYTE "Sir Muhammad Tehseen",0ah,0dh,0
 num BYTE ?
 
 ; s_frontboundries data
-bars BYTE 178,0
-inc_bars BYTE 0
+bars1 BYTE 178,0
 
 .code
 
-main PROC
-		
-		call s_about
-		;call s_frontboundries
-
-exit
-main ENDP
-
-
 s_about PROC
-		
+		call s_nodelay_boundries
+        
 		mov edx,OFFSET printFaisal
 		push edx
 		mov edx, OFFSET printFaisalRole
@@ -68,14 +57,15 @@ s_about PROC
 		mov edx, OFFSET printTitle
 		push edx
 		
-		mov dl,34
-		mov dh,18
+        mov num,2
+		mov dl,29
+		mov dh,num
 		call GoToXY
 		pop edx
 		call WriteString							; Printing Breakout Developers
 		
 		mov ecx, 4
-		mov num,20
+		add num, 2
 		
 	L1:
 	
@@ -85,7 +75,7 @@ s_about PROC
 		mov eax,600
 		call Delay
 		
-		mov dl,24
+		mov dl,19
 		mov dh,num
 		call GoTOXY
 		pop edx
@@ -94,7 +84,7 @@ s_about PROC
 		mov eax, YELLOW
 		call SetTextColor
 		
-		mov dl,47
+		mov dl,42
 		mov dh,num
 		call GoTOXY
 		pop edx
@@ -128,7 +118,7 @@ s_about PROC
 		mov eax,600
 		call Delay
 		
-		mov dl,37
+		mov dl,32
 		mov dh,num
 		call GoTOXY
 		pop edx
@@ -139,7 +129,7 @@ s_about PROC
 				
 		add num,1
 		
-		mov dl,33
+		mov dl,28
 		mov dh,num
 		call GoTOXY
 		pop edx
@@ -151,84 +141,3 @@ s_about PROC
 		
 		ret
 s_about ENDP
-
-; ------------------------------------------------------------------------------------------------------
-; ------------------------------------------------------------------------------------------------------
-
-s_frontboundries PROC
-		
-		mov eax, GREEN
-		call SetTextColor
-		mov ecx,90
-		
-	Line1:
-		mov dl,inc_bars
-		mov dh,0
-		call GoToXY
-		mov edx, OFFSET bars
-		;mov eax, 40
-		;call Delay
-		call WriteString
-			
-		inc inc_bars
-			
-	loop Line1
-		
-		mov ecx, 17
-		mov inc_bars,1
-		
-	Line2:	
-		mov dl,89
-		mov dh,inc_bars
-		call GoToXY
-		mov edx, OFFSET bars
-		;mov eax, 70
-		;call Delay
-		call WriteString
-					
-		inc inc_bars
-			
-	loop Line2
-		
-		mov ecx, 90
-		mov inc_bars,89
-		
-	
-	Line3:	
-		mov dl,inc_bars
-		mov dh,18
-		call GoToXY
-		mov edx, OFFSET bars
-		;mov eax, 40
-		;call Delay
-		call WriteString
-					
-		dec inc_bars
-						
-	loop Line3
-	
-	
-		mov ecx, 17
-		mov inc_bars,17
-		
-	
-	Line4:	
-		mov dl,0
-		mov dh,inc_bars
-		call GoToXY
-		mov edx, OFFSET bars
-		;mov eax, 70
-		;call Delay
-		call WriteString
-					
-		dec inc_bars
-		
-	loop Line4
-	
-	
-		;call s_textborder
-		
-		ret
-s_frontboundries ENDP
-
-END main
