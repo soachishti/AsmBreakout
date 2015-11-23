@@ -1,15 +1,11 @@
 include Irvine32.inc
-include tests.asm
-
-; Code to be testing.
-include ../ui/ui.asm
-include ../core/core.asm
+include misc.asm
 
 .data
 	; data here
 .code 
 main PROC
-	call tests
+	call misc
 
 	ret
 main ENDP
