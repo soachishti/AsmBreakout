@@ -21,8 +21,8 @@ include misc\misc.asm
 main PROC
     invoke SetConsoleTitle, ADDR gameNameStr	
     
-    ;call s_frontboundries   ; Front Screen
-    ;call Clrscr
+    call s_frontboundries   ; Front Screen
+    call Clrscr
     
     call s_nodelay_boundries 
     
