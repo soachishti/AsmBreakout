@@ -19,7 +19,16 @@ bars_star BYTE "*",0
 .code
 
 s_nodelay_boundries PROC
-		
+    mov bars_top, 0
+    mov bars_bottom, 79
+    mov bars_right, 1
+    mov bars_left, 19
+    mov speed_bars_hor, 10
+    mov speed_bars_ver, 10
+
+    mov inc_bars2, 0
+
+        mGotoxy 0, 0
 		mov eax, GREEN
 		call SetTextColor
 		mov ecx,80

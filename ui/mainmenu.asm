@@ -9,10 +9,10 @@ SetTextColor PROTO
 .data
 breakout BYTE "BREAKOUT",0ah,0dh,0
 menu BYTE "GAME MAIN MENU",0ah,0dh,0
-start BYTE "Start Game",0ah,0dh,0
-rules BYTE "  Rules",0ah,0dh,0
-credits BYTE " Credits",0ah,0dh,0
-exitgame BYTE "  Exit",0ah,0dh,0
+start BYTE "(S)tart Game",0ah,0dh,0
+rules BYTE "  (R)ules",0ah,0dh,0
+credits BYTE " (C)redits",0ah,0dh,0
+exitgame BYTE "  (E)xit",0ah,0dh,0
 
 ; Arrows
 pointright BYTE 175,0
@@ -26,11 +26,28 @@ dh_num BYTE 6
 .code
 
 s_menu PROC
+    mov dl_numleft, 59
+    mov dl_numright, 29
+    mov speed, 300
+    mov dh_num, 6
+
 	call s_nodelay_boundries
 	mov eax,300
 	call Delay
 	call s_menutextborder
 	call s_mainmenu
+    
+    tryagain:
+    mGotoxy 40, 17
+    mWrite "Key: "
+    call ReadChar
+    .IF al == 's' || al == 'r' || al == 'c' || al == 'e'
+        call WriteChar
+    .ELSE
+        mov eax, 500
+        call Delay
+        jmp tryagain
+    .ENDIF
 
     ret
 s_menu ENDP

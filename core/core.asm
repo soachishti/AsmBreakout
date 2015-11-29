@@ -34,9 +34,7 @@ POINT ENDS
     ballDir         POINT   <1,1>
     stickSpeed      =       3
     score           DWORD   0
-    
-    playerName      BYTE    "Zerk",0
-    
+        
     life            BYTE    4
     lifeCh          BYTE    3    
 .code 
@@ -308,8 +306,10 @@ printTitle1 PROC
     mGotoxy 35, 0
     mov  eax,black+(white*16)
     call SetTextColor
-    mWrite "AsmBreakout v1.0"
-
+    
+    mov edx, OFFSET gameNameStr
+    call WriteString
+    
     mov  eax,white+(black*16)
     call SetTextColor
     mGotoxy 69, 0
@@ -341,21 +341,26 @@ updateScore ENDP
 
 core PROC
 	;call UBorder
-    call Init_Grid
+    
+    .IF al != 'r'   ; Resume Game
+        call Init_Grid
+    .ELSE
+        call Print_Block
+    .ENDIF
+    
     call printBorder
     call printTitle1
     
   	foreverLoop: 
         INVOKE GetKeyState, VK_ESCAPE
         .IF ah
-            INVOKE  Beep, 1000,500;
+            INVOKE  Beep, 600,500;
             jmp gamePause
         .ENDIF
 	
         call BallMovement
         ;call Print_Block ; Stick ki flickering khatam karne ke liay           
         call stickMovement	
-        
         
         call grid_collision_check
         
@@ -364,7 +369,7 @@ core PROC
         je finish
         
         .IF score == maxBlock
-            jmp YouWin
+            jmp YouWinGame
         .ENDIF
         
         invoke Sleep, gameSpeed
@@ -375,26 +380,40 @@ core PROC
         
     resume:
         jmp foreverLoop
-    
-    
-    YouWin:
-        
+    YouWinGame:
+        mov al, 'w'
         jmp return
-    restart:
-        mWrite "Game restart"
-        jmp return
-    finish:
-        ; Will add life
-        mWrite "Game End"
-        
+    finish:        
         dec life
         call updateLife
         
-        jmp return
-    gamePause:
-        mWrite "Game Paused"
-        jmp return
+        .IF life == 0
+            mov al, 'o'
+            jmp return
+        .ENDIF
         
+        mGotoxy 37, 15
+        mWrite 223
+        invoke Sleep, 200
+        mWrite 223
+        invoke Sleep, 200
+        mWrite 223 
+        invoke Sleep, 200
+        mGotoxy 27, 16
+        call WaitMsg
+        
+        mGotoxy 37, 15
+        mWrite "   "
+        mGotoxy 27, 16
+        mWrite "                                "
+       
+        mGotoxy ball.x, ball.y
+        mWrite " "
+        
+        jmp foreverLoop
+    gamePause:
+        mov al, 'p'        
+        jmp return        
     return:
 	ret
 core ENDP
@@ -408,6 +427,11 @@ updateLife PROC
 
     mov  eax,red+(black*16)
     call SetTextColor
+    
+    .IF life == 0
+        ret
+    .ENDIF 
+    
     movzx ecx, life
     l0:
         mov al, lifeCh ; Heart
@@ -415,3 +439,17 @@ updateLife PROC
     loop l0
     ret
 updateLife ENDP
+
+
+resetGame PROC
+    mov stickPos.x, 38           
+    mov stickPos.y, 25
+	mov color_rand, 2 
+    mov ball.x, 40
+    mov ball.y, 25
+    mov ballDir.x, 1
+    mov ballDir.y, 1 
+    mov score, 0
+    mov life, 4
+    ret
+resetGame ENDP

@@ -34,10 +34,8 @@ num BYTE ?
 bars1 BYTE 178,0
 
 .code
-
 s_about PROC
-		call s_nodelay_boundries
-        
+        call s_nodelay_boundries
 		mov edx,OFFSET printFaisal
 		push edx
 		mov edx, OFFSET printFaisalRole
@@ -138,6 +136,6 @@ s_about PROC
 		add num,2
 				
 		loop L2
-		
+		call ReadChar        
 		ret
 s_about ENDP

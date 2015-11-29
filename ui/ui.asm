@@ -12,6 +12,9 @@ inc_bars BYTE 0
 include mainmenu.asm
 include about.asm
 include pausescreen.asm
+include gameover.asm
+include youwin.asm
+	
 	
 .code 
 include helperPROC.asm
@@ -49,6 +52,8 @@ s_frontscreen PROC
 		mov dh, 15
 		call GoToXY
 	
+        call WaitMsg
+        
 		ret
 
 s_frontscreen ENDP

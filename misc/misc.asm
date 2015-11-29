@@ -1,5 +1,6 @@
+include fileHandle.asm
 .code 
-misc PROC
+tests PROC
 
 	ret
-misc ENDP
+tests ENDP
