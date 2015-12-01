@@ -19,6 +19,10 @@ include ui\ui.asm
 include misc\misc.asm
 
 main PROC
+    call core
+    
+    ret
+    
     invoke SetConsoleTitle, ADDR gameNameStr	
     
     call s_frontboundries   ; Front Screen
