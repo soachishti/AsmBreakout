@@ -41,6 +41,7 @@ main PROC
         mov edx, OFFSET playerName
         call WriteString
         call ReadChar
+        
     .ENDIF 
     
     

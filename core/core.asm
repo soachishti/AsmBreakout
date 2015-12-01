@@ -325,6 +325,10 @@ printTitle1 PROC
         mov al, lifeCh ; Heart
         call WriteChar
     loop l0
+
+
+    mGotoxy 55, maxRow + 2
+    call printTime
     ret
 printTitle1 ENDP
 
@@ -336,6 +340,10 @@ updateScore PROC
     mGotoxy 76, 0
     mov eax, score
     call WriteDec
+    
+    mGotoxy 55, maxRow + 2
+    call printTime
+    
     ret
 updateScore ENDP
 
@@ -437,6 +445,7 @@ updateLife PROC
         mov al, lifeCh ; Heart
         call WriteChar
     loop l0
+    
     ret
 updateLife ENDP
 
