@@ -52,7 +52,9 @@ s_frontscreen PROC
 		mov dh, 15
 		call GoToXY
 	
-        call WaitMsg
+        
+        
+        
         
 		ret
 
@@ -71,7 +73,7 @@ s_frontboundries PROC
 		mov dh,0
 		call GoToXY
 		mov edx, OFFSET bars
-		mov eax, 40
+		mov eax, 20
 		call Delay
 		call WriteString
 			
@@ -87,7 +89,7 @@ s_frontboundries PROC
 		mov dh,inc_bars
 		call GoToXY
 		mov edx, OFFSET bars
-		mov eax, 70
+		mov eax, 40
 		call Delay
 		call WriteString
 					
@@ -102,7 +104,7 @@ s_frontboundries PROC
 		mov dh,18
 		call GoToXY
 		mov edx, OFFSET bars
-		mov eax, 40
+		mov eax, 20
 		call Delay
 		call WriteString
 					
@@ -119,7 +121,7 @@ s_frontboundries PROC
 		mov dh,inc_bars
 		call GoToXY
 		mov edx, OFFSET bars
-		mov eax, 70
+		mov eax, 40
 		call Delay
 		call WriteString
 					
@@ -128,6 +130,15 @@ s_frontboundries PROC
 	loop Line4
 	
 		call s_textborder
+        
+        
+        mGotoxy 36, 14
+        mWrite "--------------"
+        mGotoxy 36, 15
+        mWrite "| Click Here |"
+        mGotoxy 36, 16
+        mWrite "--------------"
+        
 		ret
 s_frontboundries ENDP
 

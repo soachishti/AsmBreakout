@@ -2,15 +2,32 @@ include Irvine32.inc
 INCLUDE Macros.inc 
 INCLUDELIB Kernel32.lib
 INCLUDELIB User32.Lib
+INCLUDE     GraphWin.inc
+
+VK_ESCAPE		EQU		00000001bh
+VK_LBUTTON		EQU		000000001h
+VK_RBUTTON		EQU		000000002h
 
 DeleteFile PROTO lpFileName:DWORD
 SetTextColor PROTO
 Beep PROTO dwFreq:DWORD, dwDuration:DWORD
 
+GetCursorPos                PROTO, lpPoint:DWORD
+ScreenToClient PROTO, hWnd:DWORD, lpPoint:DWORD
+GetConsoleWindow            PROTO
+GetKeyState                 PROTO :DWORD
+
 .data
     gameNameStr    BYTE    "AsmBreakout v1.0", 0
     clsText        BYTE     80 DUP(' '), 0
     PlayerName     BYTE    51 DUP(?)
+    
+    
+    cursorPos POINT <?,?>
+    hwndConsole DWORD ?
+    hStdOut DWORD ?
+    screen RECT <>
+    
 .code 
 
 ; Collecting team source
@@ -18,14 +35,55 @@ include core\core.asm
 include ui\ui.asm
 include misc\misc.asm
 
-main PROC
-    call core
-    
-    ret
-    
+main PROC    
     invoke SetConsoleTitle, ADDR gameNameStr	
     
     call s_frontboundries   ; Front Screen
+    
+    INVOKE  GetConsoleWindow
+    mov     hwndConsole,eax
+    
+    INVOKE  GetStdHandle,STD_OUTPUT_HANDLE
+    mov     hStdOut,eax
+    mouseCheck:
+         INVOKE GetCursorPos, ADDR cursorPos
+         INVOKE ScreenToClient, hwndConsole, ADDR cursorPos
+
+        .IF cursorPos.X > 290 && cursorPos.X < 398 && cursorPos.Y > 201 && cursorPos.Y < 229
+            INVOKE  GetKeyState,VK_LBUTTON
+            .IF ah
+                mov eax, BLUE
+                call SetTextColor
+            .ELSE
+                mov eax, GRAY
+                call SetTextColor
+            .ENDIF
+            mGotoxy 36, 14
+            mWrite "--------------"
+            mGotoxy 36, 15
+            mWrite "| CLICK HERE |"
+            mGotoxy 36, 16
+            mWrite "--------------"
+            INVOKE  GetKeyState,VK_LBUTTON
+            .IF ah 
+                jmp mouseEnd
+            .ENDIF
+        .ELSE 
+            mov eax, YELLOW
+            call SetTextColor
+            mGotoxy 36, 14
+            mWrite "--------------"
+            mGotoxy 36, 15
+            mWrite "| CLICK HERE |"
+            mGotoxy 36, 16
+            mWrite "--------------"
+        .ENDIF   
+        
+        INVOKE Sleep, 20
+        
+    jmp mouseCheck
+    mouseEnd:
+ 
     call Clrscr
     
     call s_nodelay_boundries 

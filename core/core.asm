@@ -7,14 +7,14 @@ maxRow      EQU     25
 
 GetKeyState PROTO, nVirtKey:DWORD
 
-POINT STRUCT
+POINTv2 STRUCT
 	x       BYTE ?
 	y       BYTE ?
     color   DWORD ? ; color
-POINT ENDS
+POINTv2 ENDS
 
 .data
-    stickPos        POINT   <38, 25>           
+    stickPos        POINTv2   <38, 25>           
     ;UpperBorder     BYTE	247,247,247,247,247,247,247,247,0
 	;LowerBorder     BYTE 	247,247,247,247,247,247,247,247,0
     stickSize       =       10
@@ -26,12 +26,12 @@ POINT ENDS
 	;block           BYTE    223,223,223,223,223,223,223,223,0
 	block           BYTE    240,240,240,240,240,240,240,240,0
 	Space           BYTE    "        ",0
-	axis            POINT   maxBlock DUP(<?,?>)
+	axis            POINTv2   maxBlock DUP(<?,?>)
 	color_rand      DWORD   2
     
     ballChar        BYTE    'O'
-    ball            POINT   <40,25>
-    ballDir         POINT   <1,1>
+    ball            POINTv2   <40,25>
+    ballDir         POINTv2   <1,1>
     stickSpeed      =       3
     score           DWORD   0
         
