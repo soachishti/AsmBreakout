@@ -1,31 +1,34 @@
-Include irvine32.inc
-Include boundries.asm
+;Include irvine32.inc
+;Include MACROS.inc
+;Include boundries.asm
+
+;SetTextColor PROTO
 
  ;call ui
 .data
 
 ; s_frontscreen data
-g_welcome BYTE "WELCOME",0ah,0dh,0
-g_to BYTE "TO",0ah,0dh,0
-g_name BYTE "BREAKOUT",0ah,0dh,0ah,0dh,0
+g_welcome1 BYTE "WELCOME",0ah,0dh,0
+g_to1 BYTE "TO",0ah,0dh,0
+g_name1 BYTE "BREAKOUT",0ah,0dh,0ah,0dh,0
 
 ; s_frontboundries data
-bars BYTE 240,0
-bars_num BYTE 0
+bars2 BYTE 240,0
+bars2_num2 BYTE 0
 	
-num DWORD 1
+num1 DWORD 1
 
-; Controlling delay speed
-speed DWORD 80
+; Controlling delay speed1
+speed1 DWORD 80
 
 ;colors 3,6,9,12,13,14
 
 .code 
 ;include helperPROC.asm
-main PROC
+FrontName PROC
 
 		
-	call s_frontboundries
+	;call s_frontboundries
 	
 	mov eax, 12
 	call SetTextColor
@@ -58,8 +61,8 @@ main PROC
 	mov eax, 8
 	call SetTextColor
 	call s_alphaT
-exit
-main ENDP
+    ret
+FrontName ENDP
 
 ;=================================================================
 ;=================================================================
@@ -68,40 +71,40 @@ main ENDP
 s_alphaB PROC
 
 		mov ecx,7
-		mov bars_num,9
+		mov bars2_num2,9
 		
 		straightline: 	
 				
 			mov dl,12
-			mov dh,bars_num
+			mov dh,bars2_num2
 			call GoToXY
 				
-			mov eax,speed
+			mov eax,speed1
 			call delay	
-			mov edx, OFFSET bars
+			mov edx, OFFSET bars2
 			call WriteString
 			
-			dec bars_num
+			dec bars2_num2
 			
 		loop straightline
 		
 ;----------------------------------------------------------
 		
 			mov ecx,7
-			mov bars_num,12
+			mov bars2_num2,12
 			
 		vert1a:
 			
-			mov dl,bars_num
+			mov dl,bars2_num2
 			mov dh,3
 			call GoToXY
 			
-			mov eax,speed
+			mov eax,speed1
 			call delay	
-			mov edx, OFFSET bars
+			mov edx, OFFSET bars2
 			call WriteString
 			
-			inc bars_num			
+			inc bars2_num2			
 
 		loop vert1a
 		
@@ -111,37 +114,37 @@ s_alphaB PROC
 			mov dh,4
 			call GoToXY
 				
-			mov eax,speed
+			mov eax,speed1
 			call delay	
-			mov edx, OFFSET bars
+			mov edx, OFFSET bars2
 			call WriteString
 				
 			mov dl,19
 			mov dh,5
 			call GoToXY
 				
-			mov eax,speed
+			mov eax,speed1
 			call delay	
-			mov edx, OFFSET bars
+			mov edx, OFFSET bars2
 			call WriteString
 			
 ;-----------------------------------------------------------
 		
 			mov ecx,6
-			mov bars_num,18
+			mov bars2_num2,18
 			
 		vert1b:
 					
-			mov dl,bars_num
+			mov dl,bars2_num2
 			mov dh,6
 			call GoToXY
 					
-			mov eax,speed
+			mov eax,speed1
 			call delay			
-			mov edx, OFFSET bars
+			mov edx, OFFSET bars2
 			call WriteString
 					
-			dec bars_num			
+			dec bars2_num2			
 		
 		loop vert1b
 		
@@ -151,46 +154,46 @@ s_alphaB PROC
 			mov dh,6	
 			call GoToXY
 			
-			mov eax,speed
+			mov eax,speed1
 			call delay
-			mov edx, OFFSET bars
+			mov edx, OFFSET bars2
 			call WriteString
 			
 			mov dl,21
 			mov dh,7
 			call GoToXY
 			
-			mov eax,speed
+			mov eax,speed1
 			call delay
-			mov edx, OFFSET bars
+			mov edx, OFFSET bars2
 			call WriteString
 			
 			mov dl,21
 			mov dh,8
 			call GoToXY
 			
-			mov eax,speed
+			mov eax,speed1
 			call delay
-			mov edx, OFFSET bars
+			mov edx, OFFSET bars2
 			call WriteString	
 			
 ;------------------------------------------------------------
 			
 			mov ecx,8
-			mov bars_num,20
+			mov bars2_num2,20
 			
 		vert2:
 			
-			mov dl,bars_num
+			mov dl,bars2_num2
 			mov dh,9
 			call GoToXY
 					
-			mov eax,speed
+			mov eax,speed1
 			call delay			
-			mov edx, OFFSET bars
+			mov edx, OFFSET bars2
 			call WriteString
 					
-			dec bars_num	
+			dec bars2_num2	
 				
 		loop vert2
 		
@@ -207,20 +210,20 @@ s_alphaB ENDP
 s_alphaR PROC
 
 		mov ecx,7
-		mov bars_num,9
+		mov bars2_num2,9
 		
 	straightline: 	
 				
 		mov dl,24
-		mov dh,bars_num
+		mov dh,bars2_num2
 		call GoToXY
 				
-		mov eax,speed
+		mov eax,speed1
 		call delay	
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 			
-		dec bars_num
+		dec bars2_num2
 			
 	loop straightline
 	
@@ -228,20 +231,20 @@ s_alphaR PROC
 ;----------------------------------------------------------
 		
 		mov ecx,7
-		mov bars_num,24
+		mov bars2_num2,24
 			
 	vert1a:
 			
-		mov dl,bars_num
+		mov dl,bars2_num2
 		mov dh,3
 		call GoToXY
 			
-		mov eax,speed
+		mov eax,speed1
 		call delay	
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 			
-		inc bars_num			
+		inc bars2_num2			
 
 	loop vert1a
 	
@@ -251,37 +254,37 @@ s_alphaR PROC
 		mov dh,4
 		call GoToXY
 				
-		mov eax,speed
+		mov eax,speed1
 		call delay	
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 				
 		mov dl,31
 		mov dh,5
 		call GoToXY
 				
-		mov eax,speed
+		mov eax,speed1
 		call delay	
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 		
 ;-----------------------------------------------------------
 		
 		mov ecx,6
-		mov bars_num,30
+		mov bars2_num2,30
 			
 	vert1b:
 					
-		mov dl,bars_num
+		mov dl,bars2_num2
 		mov dh,6		
 		call GoToXY
 					
-		mov eax,speed
+		mov eax,speed1
 		call delay			
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 					
-		dec bars_num			
+		dec bars2_num2			
 		
 	loop vert1b
 		
@@ -292,27 +295,27 @@ s_alphaR PROC
 		mov dh,7
 		call GoToXY
 		
-		mov eax,speed
+		mov eax,speed1
 		call delay			
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 		
 		mov dl,31
 		mov dh,8
 		call GoToXY
 		
-		mov eax,speed
+		mov eax,speed1
 		call delay			
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 		
 		mov dl,32
 		mov dh,9
 		call GoToXY
 		
-		mov eax,speed
+		mov eax,speed1
 		call delay			
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString		
 		
 ;----------------------------------------------------------------		
@@ -328,67 +331,67 @@ s_alphaE PROC
 
 
 		mov ecx,7
-		mov bars_num,9
+		mov bars2_num2,9
 		
 	straightline: 	
 				
 		mov dl,35
-		mov dh,bars_num
+		mov dh,bars2_num2
 		call GoToXY
 				
-		mov eax,speed
+		mov eax,speed1
 		call delay	
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 			
-		dec bars_num
+		dec bars2_num2
 			
 	loop straightline
 	
 ;----------------------------------------------------------
 
 		mov ecx,7
-		mov bars_num,35
+		mov bars2_num2,35
 			
 	vert1b:
 			
-		mov dl,bars_num
+		mov dl,bars2_num2
 		mov dh,6
 		call GoToXY
 			
-		mov eax,speed
+		mov eax,speed1
 		call delay	
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 			
-		inc bars_num			
+		inc bars2_num2			
 
 	loop vert1b
 	
 	;-----------------------------
 		mov ecx,7
-		mov bars_num,35
+		mov bars2_num2,35
 			
 	vert1ac:
 		
 		; Vertical line A
-		mov dl,bars_num
+		mov dl,bars2_num2
 		mov dh,3
 		call GoToXY
 			
-		mov eax,speed
+		mov eax,speed1
 		call delay	
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 			
 		; Vertical line C
-		mov dl,bars_num
+		mov dl,bars2_num2
 		mov dh,9
 		call GoToXY
 						
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
-		inc bars_num			
+		inc bars2_num2			
 
 	loop vert1ac
 				
@@ -403,111 +406,111 @@ s_alphaA PROC
 
 
 		mov ecx,4
-		mov bars_num,9
+		mov bars2_num2,9
 		
 	straightline: 	
 				
 		mov dl,44
-		mov dh,bars_num
+		mov dh,bars2_num2
 		call GoToXY
 		
-		mov eax,speed
+		mov eax,speed1
 		call delay	
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 			
 		mov dl,52
-		mov dh,bars_num
+		mov dh,bars2_num2
 		call GoToXY
 		
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 		
-		dec bars_num
+		dec bars2_num2
 			
 	loop straightline
 	
 ;----------------------------------------------------------
 
-		mov eax,speed
+		mov eax,speed1
 		call delay
 		
 		mov dl,45
 		mov dh,5
 		call GoToXY
 		
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 		
 		mov dl,51
 		mov dh,5
 		call GoToXY
 				
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 		
 		;-------------------- 
 		
-		mov eax,speed
+		mov eax,speed1
 		call delay
 		
 		mov dl,46
 		mov dh,4
 		call GoToXY
 		
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 		
 		mov dl,50
 		mov dh,4
 		call GoToXY
 				
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 		
 		;---------------------
 		
-		mov eax,speed
+		mov eax,speed1
 		call delay
 		
 		mov dl,47
 		mov dh,3
 		call GoToXY
 		
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 		
 		mov dl,49
 		mov dh,3
 		call GoToXY
 				
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString		
 		
 		mov dl,48
 		mov dh,3
 		call GoToXY
 				
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 		
 ;-----------------------------------------------------------
 
 		mov ecx,9
-		mov bars_num,44
+		mov bars2_num2,44
 			
 	vert1:
 			
-		mov dl,bars_num
+		mov dl,bars2_num2
 		mov dh,6
 		call GoToXY
 			
-		mov eax,speed
+		mov eax,speed1
 		call delay	
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 			
-		inc bars_num			
+		inc bars2_num2			
 
 	loop vert1
 	
@@ -522,20 +525,20 @@ s_alphaK PROC
 
 
 		mov ecx,7
-		mov bars_num,9
+		mov bars2_num2,9
 		
 	straightline: 	
 				
 		mov dl,55
-		mov dh,bars_num
+		mov dh,bars2_num2
 		call GoToXY
 				
-		mov eax,speed
+		mov eax,speed1
 		call delay	
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 			
-		dec bars_num
+		dec bars2_num2
 			
 	loop straightline
 	
@@ -545,57 +548,57 @@ s_alphaK PROC
 		mov dh,6
 		call GoToXY
 		
-		mov eax,speed
+		mov eax,speed1
 		call delay
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 		
 		mov dl,59
 		mov dh,5
 		call GoToXY
 		
-		mov eax,speed
+		mov eax,speed1
 		call delay
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 		
 		mov dl,59
 		mov dh,7
 		call GoToXY
 		
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 		
 		mov dl,60
 		mov dh,4
 		call GoToXY
 		
-		mov eax,speed
+		mov eax,speed1
 		call delay
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 		
 		mov dl,60
 		mov dh,8
 		call GoToXY
 		
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 		
 		mov dl,62
 		mov dh,3
 		call GoToXY
 		
-		mov eax,speed
+		mov eax,speed1
 		call delay
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 		
 		mov dl,62
 		mov dh,9
 		call GoToXY
 		
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 		
 ret
@@ -609,27 +612,27 @@ s_alphaO PROC
 
 
 		mov ecx,3
-		mov bars_num,13
+		mov bars2_num2,13
 		
 	straightline: 	
 				
 		mov dl,44
-		mov dh,bars_num
+		mov dh,bars2_num2
 		call GoToXY
 				
-		mov eax,speed
+		mov eax,speed1
 		call delay	
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 		
 		mov dl,52
-		mov dh,bars_num
+		mov dh,bars2_num2
 		call GoToXY
 					
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString		
 			
-		inc bars_num
+		inc bars2_num2
 			
 	loop straightline
 	
@@ -638,9 +641,9 @@ s_alphaO PROC
 		mov dh,12
 		call GoToXY
 		
-		mov eax, speed
+		mov eax, speed1
 		call DELAY
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 		
 		;-----------------------
@@ -649,36 +652,36 @@ s_alphaO PROC
 		mov dh,16
 		call GoToXY
 				
-		mov eax, speed
+		mov eax, speed1
 		call DELAY
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 		
 		mov ecx,5
-		mov bars_num,46
+		mov bars2_num2,46
 	
 ;----------------------------------------------------------------------
 	horiline:
 		
-		mov dl, bars_num
+		mov dl, bars2_num2
 		mov dh,11
 		call GoToXY
 		
-		mov eax, speed
+		mov eax, speed1
 		call DELAY
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 		
-		mov dl,bars_num
+		mov dl,bars2_num2
 		mov dh,17
 		call GoToXY
 		
-		mov eax, speed
+		mov eax, speed1
 		call DELAY
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 				
-		inc bars_num
+		inc bars2_num2
 		
 	loop horiline
 	
@@ -687,18 +690,18 @@ s_alphaO PROC
 		mov dh,12
 		call GoToXY
 				
-		mov eax, speed
+		mov eax, speed1
 		call DELAY
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 
 		mov dl,51 
 		mov dh,16
 		call GoToXY
 				
-		mov eax, speed
+		mov eax, speed1
 		call DELAY
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString		
 
 ret
@@ -711,29 +714,29 @@ s_alphaO ENDP
 s_alphaU PROC
 
 		mov ecx,5
-		mov bars_num,11
+		mov bars2_num2,11
 		
 	straightline: 	
 				
 		mov dl,55
-		mov dh,bars_num
+		mov dh,bars2_num2
 		call GoToXY
 				
-		mov eax,speed
+		mov eax,speed1
 		call delay	
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 		
 		mov dl,62
-		mov dh,bars_num
+		mov dh,bars2_num2
 		call GoToXY
 				
-		mov eax,speed
+		mov eax,speed1
 		call delay	
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString		
 			
-		inc bars_num
+		inc bars2_num2
 			
 	loop straightline
 	
@@ -743,28 +746,28 @@ s_alphaU PROC
 		mov dh,16
 		call GoToXY
 
-		mov eax,speed
+		mov eax,speed1
 		call delay	
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 
 ;----------------------------------------------------------------------
 
 		mov ecx,4
-		mov bars_num,57
+		mov bars2_num2,57
 		
 	horiline:
 		
-		mov dl, bars_num
+		mov dl, bars2_num2
 		mov dh,17
 		call GoToXY
 		
-		mov eax, speed
+		mov eax, speed1
 		call DELAY
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 				
-		inc bars_num
+		inc bars2_num2
 		
 	loop horiline
 	
@@ -774,9 +777,9 @@ s_alphaU PROC
 		mov dh,16
 		call GoToXY
 
-		mov eax,speed
+		mov eax,speed1
 		call delay	
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 
 ret
@@ -790,52 +793,48 @@ s_alphaU ENDP
 s_alphaT PROC
 
 		mov ecx,9
-		mov bars_num,65
+		mov bars2_num2,65
 		
 	horiline:
 		
-		mov dl, bars_num
+		mov dl, bars2_num2
 		mov dh,11
 		call GoToXY
 		
-		mov eax, speed
+		mov eax, speed1
 		call DELAY
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 				
-		inc bars_num
+		inc bars2_num2
 		
 	loop horiline
 	
 ;----------------------------------------------------------------------
 
 		mov ecx,7
-		mov bars_num,11
+		mov bars2_num2,11
 		
 	straightline: 	
 				
 		mov dl,69
-		mov dh,bars_num
+		mov dh,bars2_num2
 		call GoToXY
 				
-		mov eax,speed
+		mov eax,speed1
 		call delay	
-		mov edx, OFFSET bars
+		mov edx, OFFSET bars2
 		call WriteString
 		
-		inc bars_num
+		inc bars2_num2
 			
 	loop straightline
 	
 	mov dl,2
 	mov dh,18
 	call GoToXY
-	call WaitMsg
+	
 	
 
 ret
 s_alphaT ENDP
-
-END main
-
-	

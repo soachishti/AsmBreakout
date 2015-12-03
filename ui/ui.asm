@@ -14,10 +14,9 @@ include about.asm
 include pausescreen.asm
 include gameover.asm
 include youwin.asm
-	
+include frontscreen.asm
 	
 .code 
-include helperPROC.asm
 s_frontscreen PROC
 
 		mov eax, 500
@@ -51,13 +50,8 @@ s_frontscreen PROC
 		mov dl, 30
 		mov dh, 15
 		call GoToXY
-	
-        
-        
-        
-        
+	        
 		ret
-
 s_frontscreen ENDP
 
 ; ----------------------------------------------------------------------------------------------------------------------------------------
@@ -131,7 +125,6 @@ s_frontboundries PROC
 	
 		call s_textborder
         
-        
         mGotoxy 36, 14
         mWrite "--------------"
         mGotoxy 36, 15
@@ -161,8 +154,6 @@ s_textborder PROC
 		mov dh,6
 		call GoToXY	
 		mov edx, OFFSET bars
-		;mov eax, 40
-		;call Delay
 		call WriteString
 			
 		inc inc_bars
@@ -177,8 +168,6 @@ s_textborder PROC
 		mov dh,inc_bars
 		call GoToXY
 		mov edx, OFFSET bars
-		;mov eax, 70
-		;call Delay
 		call WriteString
 					
 		inc inc_bars
@@ -193,14 +182,11 @@ s_textborder PROC
 		mov dh,12
 		call GoToXY
 		mov edx, OFFSET bars
-		;mov eax, 40
-		;call Delay
 		call WriteString
 							
 		dec inc_bars
 								
-	loop Line3
-			
+	loop Line3	
 			
 		mov ecx, 7
 		mov inc_bars,12
@@ -210,8 +196,6 @@ s_textborder PROC
 		mov dh,inc_bars
 		call GoToXY
 		mov edx, OFFSET bars
-		;mov eax, 70
-		;call Delay
 		call WriteString
 							
 		dec inc_bars

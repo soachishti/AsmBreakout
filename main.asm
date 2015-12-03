@@ -53,9 +53,11 @@ include ui\ui.asm
 include misc\misc.asm
 
 main PROC    
-    invoke SetConsoleTitle, ADDR gameNameStr	
-    
-    ;call s_frontboundries   ; Front Screen
+    invoke SetConsoleTitle, ADDR gameNameStr
+	
+    call s_nodelay_boundries 
+    mov speed1, 20
+    call FrontName
     
     INVOKE  GetConsoleWindow
     mov     hwndConsole,eax
@@ -65,8 +67,8 @@ main PROC
     mouseCheck:
          INVOKE GetCursorPos, ADDR cursorPos
          INVOKE ScreenToClient, hwndConsole, ADDR cursorPos
-
-        .IF cursorPos.X > 290 && cursorPos.X < 398 && cursorPos.Y > 201 && cursorPos.Y < 229
+         
+        .IF cursorPos.X > 105 && cursorPos.X < 286 && cursorPos.Y > 202 && cursorPos.Y < 233
             INVOKE  GetKeyState,VK_LBUTTON
             .IF ah
                 mov eax, BLUE
@@ -75,12 +77,12 @@ main PROC
                 mov eax, GRAY
                 call SetTextColor
             .ENDIF
-            mGotoxy 36, 14
-            mWrite "--------------"
-            mGotoxy 36, 15
-            mWrite "| CLICK HERE |"
-            mGotoxy 36, 16
-            mWrite "--------------"
+            mGotoxy 13, 14
+            mWrite "-----------------------"
+            mGotoxy 13, 15
+            mWrite "| CLICK HERE TO START |"
+            mGotoxy 13, 16
+            mWrite "-----------------------"
             INVOKE  GetKeyState,VK_LBUTTON
             .IF ah 
                 jmp mouseEnd
@@ -88,12 +90,12 @@ main PROC
         .ELSE 
             mov eax, YELLOW
             call SetTextColor
-            mGotoxy 36, 14
-            mWrite "--------------"
-            mGotoxy 36, 15
-            mWrite "| CLICK HERE |"
-            mGotoxy 36, 16
-            mWrite "--------------"
+            mGotoxy 13, 14
+            mWrite "-----------------------"
+            mGotoxy 13, 15
+            mWrite "| CLICK HERE TO START |"
+            mGotoxy 13, 16
+            mWrite "-----------------------"
         .ENDIF   
         
         INVOKE Sleep, 20
@@ -111,12 +113,16 @@ main PROC
         mGotoxy 30, 10
         mWrite "Enter your name: "
         mov ecx, 50
+        mov eax, BLUE
+        call SetTextColor
         mov edx, OFFSET playerName
         call ReadString
         call PutPlayerName
     .ELSE
         mGotoxy 30, 10
         mWrite "Welcome back! "
+        mov eax, BLUE
+        call SetTextColor
         mov edx, OFFSET playerName
         call WriteString
         call ReadChar
