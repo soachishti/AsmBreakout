@@ -15,7 +15,7 @@ include pausescreen.asm
 include gameover.asm
 include youwin.asm
 include frontscreen.asm
-	
+include rules.asm
 .code 
 s_frontscreen PROC
 

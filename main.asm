@@ -56,7 +56,7 @@ main PROC
     invoke SetConsoleTitle, ADDR gameNameStr
 	
     call s_nodelay_boundries 
-    mov speed1, 20
+    mov speed1, 30
     call FrontName
     
     INVOKE  GetConsoleWindow
@@ -183,7 +183,7 @@ main PROC
         jmp MainMenuView
     RulesView:
         call ResetScreen
-        call s_about       
+        call s_rules      
         jmp MainMenuView
     ExitThisGame:
         call DeleteGameFile
