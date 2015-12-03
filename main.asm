@@ -2,7 +2,7 @@ include Irvine32.inc
 INCLUDE Macros.inc 
 INCLUDELIB Kernel32.lib
 INCLUDELIB User32.Lib
-INCLUDE     GraphWin.inc
+;INCLUDE     GraphWin.inc
 
 VK_ESCAPE		EQU		00000001bh
 VK_LBUTTON		EQU		000000001h
@@ -17,13 +17,30 @@ ScreenToClient PROTO, hWnd:DWORD, lpPoint:DWORD
 GetConsoleWindow            PROTO
 GetKeyState                 PROTO :DWORD
 
+POINTv2 STRUCT
+  X   DWORD ?
+  Y   DWORD ?
+POINTv2 ENDS
+
+POINT STRUCT
+	x       BYTE ?
+	y       BYTE ?
+    color   DWORD ? ; color
+POINT ENDS
+
+RECT STRUCT
+  left      DWORD ?
+  top       DWORD ?
+  right     DWORD ?
+  bottom    DWORD ?
+RECT ENDS
+
 .data
     gameNameStr    BYTE    "AsmBreakout v1.0", 0
     clsText        BYTE     80 DUP(' '), 0
     PlayerName     BYTE    51 DUP(?)
-    
-    
-    cursorPos POINT <?,?>
+
+    cursorPos POINTv2 <?,?>
     hwndConsole DWORD ?
     hStdOut DWORD ?
     screen RECT <>
@@ -38,7 +55,7 @@ include misc\misc.asm
 main PROC    
     invoke SetConsoleTitle, ADDR gameNameStr	
     
-    call s_frontboundries   ; Front Screen
+    ;call s_frontboundries   ; Front Screen
     
     INVOKE  GetConsoleWindow
     mov     hwndConsole,eax
