@@ -13,7 +13,7 @@ SetTextColor PROTO
 Beep PROTO dwFreq:DWORD, dwDuration:DWORD
 
 GetCursorPos                PROTO, lpPoint:DWORD
-ScreenToClient PROTO, hWnd:DWORD, lpPoint:DWORD
+ScreenToClient              PROTO, hWnd:DWORD, lpPoint:DWORD
 GetConsoleWindow            PROTO
 GetKeyState                 PROTO :DWORD
 
@@ -56,7 +56,7 @@ main PROC
     invoke SetConsoleTitle, ADDR gameNameStr
 	
     call s_nodelay_boundries 
-    mov speed1, 30
+    mov speed1, 0
     call FrontName
     
     INVOKE  GetConsoleWindow
