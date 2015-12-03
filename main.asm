@@ -56,7 +56,7 @@ main PROC
     invoke SetConsoleTitle, ADDR gameNameStr
 	
     call s_nodelay_boundries 
-    mov speed1, 0
+    mov speed1, 30
     call FrontName
     
     INVOKE  GetConsoleWindow
