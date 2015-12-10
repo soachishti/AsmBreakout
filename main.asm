@@ -16,6 +16,7 @@ GetCursorPos                PROTO, lpPoint:DWORD
 ScreenToClient              PROTO, hWnd:DWORD, lpPoint:DWORD
 GetConsoleWindow            PROTO
 GetKeyState                 PROTO :DWORD
+extrn MessageBoxA@16 : PROC
 
 POINTv2 STRUCT
   X   DWORD ?
@@ -45,6 +46,7 @@ RECT ENDS
     hStdOut DWORD ?
     screen RECT <>
     
+    ExitMsg BYTE "Have a good day!",0
 .code 
 
 ; Collecting team source
@@ -52,7 +54,7 @@ include core\core.asm
 include ui\ui.asm
 include misc\misc.asm
 
-main PROC    
+main PROC            
     invoke SetConsoleTitle, ADDR gameNameStr
 	
     call s_nodelay_boundries 
@@ -186,6 +188,14 @@ main PROC
         call s_rules      
         jmp MainMenuView
     ExitThisGame:
+        mov eax, OFFSET ExitMsg
+        mov ebx, 0
+        push ebx
+        push eax
+        push eax
+        push ebx
+        call MessageBoxA@16
+        
         call DeleteGameFile
         call ResetScreen
         exit          
